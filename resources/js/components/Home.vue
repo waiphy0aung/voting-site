@@ -11,10 +11,10 @@
                     </h1>
                     <div class="text-center">
                         <ul>
-                            <li v-for="r in role" :key="r.name"><router-link
-                            :to="{name : 'competitor',params : {competitor : r.slug}}"
+                            <li v-for="r in role" :key="r.name"><button
+                            @click="menuBtn(r.slug)"
                              class="my-3 w-75 text-white btn-lg btn btn-primary rounded-pill"
-                             >{{ r.name }}</router-link></li>
+                             >{{ r.name }}</button></li>
                         </ul>
                         
                     </div>
@@ -35,6 +35,14 @@ export default {
                 {name : 'Best Singer',slug : 'singer'},
             ]
         }
+    },
+    methods : {
+        menuBtn(competitor){
+            if(competitor){
+                this.$Progress.start();
+                this.$router.push({name : 'competitor',params: {competitor : competitor}})
+            }
+        },
     },
     created(){
         this.$Progress.start();
