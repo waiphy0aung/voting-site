@@ -14,7 +14,7 @@
                     <div class="card">
                         <div class="card-body">
                             <p v-for="u in url" :key="u.id">
-                                {{ `http://localhost:8000/api/login?voter_id=${u.voter_id}&password=${u.password}` }}
+                                {{ `https://ucsm-voting.herokuapp.com/api/login?voter_id=${u.voter_id}&password=${u.password}` }}
                             </p>
                         </div>
                     </div>
