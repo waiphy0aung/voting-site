@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg bg-primary position-fixed fixed-top">
+        <nav class="navbar navbar-expand-lg bg-primary position-sticky top-0" style="z-index : 1000;">
             <div class="container-fluid">
                 <a class="navbar-brand text-white d-flex align-items-center" href="#"> 
                     <img src="/images/logo_ucsm.png" class="me-2" style="width: 30px;" alt="">
