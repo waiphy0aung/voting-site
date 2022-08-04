@@ -112,12 +112,12 @@ export default{
                     }},
           )
           this.$store.commit('toast',res.data.data)
-          console.log(res.data);
+          
             this.$store.dispatch("getCompetitors");
             this.$store.dispatch("getVoteCompetitors");
             setTimeout(()=>{
                 competitor.loading = false;
-            },1000) 
+            },2000) 
         }
     }
 }
