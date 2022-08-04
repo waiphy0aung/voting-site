@@ -101,6 +101,7 @@ export default {
                 // this.$store.commit('toast',data)
                 this.loading = false;
                 this.$store.commit('toast',data);
+                this.$Progress.start();
                 this.$router.push({name : 'competitor-list',params: {
                     competitor : this.competitor.role
                 }})

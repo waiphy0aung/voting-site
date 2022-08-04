@@ -50,6 +50,7 @@ export default {
     methods: {
         menuBtn(competitor){
             if(competitor){
+                this.$Progress.start();
                 this.$router.push({name : 'competitor-list',params: {competitor : competitor}})
             }
         }
