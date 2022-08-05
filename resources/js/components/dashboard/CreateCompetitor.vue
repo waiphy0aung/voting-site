@@ -26,7 +26,6 @@
                                 <option value="prince">prince</option>
                                 <option value="princess">princess</option>
                                 <option value="performance">performance</option>
-                                <option value="singer">singer</option>
                             </select>
                             <small v-if="this.errors.role" class="text-danger fw-bold">Please select a category</small>
                         </div>

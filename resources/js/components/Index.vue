@@ -9,7 +9,7 @@
                 </a>
             </div>
         </nav>
-        <div class="container" style="margin-top : 80px">
+        <div class="container" >
             <div class="row my-5">
                 <div class="col-12">
                     <div class="card">
