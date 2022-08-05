@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'remember_token' => Str::random(10),
         ]);
-        User::factory(100)->create();
+        User::factory(200)->create();
         Competitor::factory(20)->create();
     }
 }
