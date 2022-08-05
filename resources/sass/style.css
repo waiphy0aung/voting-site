@@ -11,7 +11,7 @@
     z-index: 10000 !important;
 }
 .loader-container .loader img{
-    width: 100px;
+    width: 300px;
 }
 
 .welcome{
