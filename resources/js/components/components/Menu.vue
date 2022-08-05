@@ -47,11 +47,12 @@ export default {
     methods: {
         menuBtn(competitor){
             if(competitor){
-                this.$Progress.start();
+                
                 this.$router.push({name : 'competitor',params: {competitor : competitor}})
             }
         },
         dashboard(){
+            this.$Progress.start();
             this.$router.push({name : 'create-competitors'})
         },
         isVoted(role){
