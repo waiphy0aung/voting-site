@@ -32,7 +32,6 @@ export default {
                 {name : 'Prince',slug : 'prince'},
                 {name : 'Princess',slug : 'princess'},
                 {name : 'Best Performance',slug : 'performance'},
-                {name : 'Best Singer',slug : 'singer'},
             ]
         }
     },  

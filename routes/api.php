@@ -27,10 +27,6 @@ Route::controller(VoteController::class)->group(function(){
     Route::middleware('auth:api')->group(function(){
         Route::post('/competitors','competitors');
         Route::get('/vote-competitors','voteCompetitors');
-        Route::get('/princes','princes');
-        Route::get('/princesses','princesses');
-        Route::get('/performances','performances');
-        Route::get('/singers','singers');
         Route::post('/competitor/create','create');
         Route::post('/competitor/{competitor}/update','update');
         Route::delete('/competitor/{competitor}/delete','delete');

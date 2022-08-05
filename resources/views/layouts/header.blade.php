@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="icon" href="https://ucsm-voting.herokuapp.com/images/logo_ucsm.png">
     
 </head>
 <body class="bg-light">

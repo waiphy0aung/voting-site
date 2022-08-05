@@ -14,7 +14,7 @@
         >
             <div class="card">
                 <div class="shadow-sm rounded card-body shadow">
-                    <img src="/images/batman.jpeg" alt="" class="img-fluid">
+                    <img src="https://drive.google.com/uc?export=view&id=1_4-cZs7Fp9OQa5lG15fnmk-MdlXznub8" alt="" class="img-fluid">
                     <hr>
                     <div class="d-flex align-items-center justify-content-between">
                         <h3 class="mb-0">{{ competitor.name }}</h3>

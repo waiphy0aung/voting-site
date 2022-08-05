@@ -20,22 +20,6 @@ class VoteController extends Controller
         return $competitors;
     }
 
-    public function princes(){
-        return Competitor::where('role','prince')->get();
-    }
-
-    public function princesses(){
-        return Competitor::where('role','princess')->get();
-    }
-
-    public function performances(){
-        return Competitor::where('role','performance')->get();
-    }
-
-    public function singers(){
-        return Competitor::where('role','singer')->get();
-    }
-
     public function create(Request $request){
         
         $validator = Validator::make($request->all(),[
@@ -83,18 +67,21 @@ class VoteController extends Controller
 
     public function voteCompetitor(Request $request){
         $voter = VoteCompetitor::where('user_id',$request->user_id)->where('role',$request->role)->where('competitor_id',$request->competitor_id);
+        $voted = VoteCompetitor::where('user_id',$request->user_id)->where('role',$request->role);
         $competitor = Competitor::where('id',$request->competitor_id)->first();
-        if($voter->first()){
-            $voter->delete();
-            return response()->json(['data' => 'You are unvoted '.$competitor->name,'success' => false]);
-        }else{
-            $voter->create([
-                'user_id' => $request->user_id,
-                'competitor_id' => $request->competitor_id,
-                'role' => $request->role,
-            ]);
-            return response()->json(['data' => 'You are voted '.$competitor->name,'success' => true]);
-        }
+            if($voter->first()){
+                $voter->delete();
+                return response()->json(['data' => 'You are unvoted '.$competitor->name,'success' => false]);
+            }else{
+                if(!$voted->first()){
+                    $voter->create([
+                        'user_id' => $request->user_id,
+                        'competitor_id' => $request->competitor_id,
+                        'role' => $request->role,
+                    ]);
+                    return response()->json(['data' => 'You are voted '.$competitor->name,'success' => true]);
+                }
+            }
 
     }
 

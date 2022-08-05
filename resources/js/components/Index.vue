@@ -6,9 +6,7 @@
                     <img src="/images/logo_ucsm.png" class="me-2" style="width: 30px;" alt="">
                     <span class="fw-bold h3 mb-0 me-2">UCSM</span>
                     <span class="welcome">Flesher Welcome</span>
-                    
                 </a>
-                
             </div>
         </nav>
         <div class="container" style="margin-top : 80px">
@@ -16,7 +14,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h1 class="fw-bold">Welcome !</h1>
+                            <h1 class="fw-bold">Thanks For Voting</h1>
                         </div>
                     </div>
                 </div>
