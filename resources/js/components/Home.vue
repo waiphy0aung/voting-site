@@ -4,10 +4,10 @@
         <div class="container">
             <div class="row vh-100">
                 <div class="col-12 mt-5">
-                    <h1 class="d-flex my-5 text-primary align-items-center justify-content-center">
-                        <img src="/images/logo_ucsm.png" class="me-2" style="width: 30px;" alt="">
+                    <h1 class="d-flex my-5 display-3 text-primary align-items-center justify-content-center">
+                        <img src="/images/logo_ucsm.png" class="me-2" style="width: 40px;" alt="">
                         <span class="fw-bold mb-0 ">UCSM</span>
-                        <span class="welcome" style="font-size: 0.8em">Flesher Welcome</span>
+                        <span class="welcome fw-bold" style="font-size: 0.8em">Flesher Welcome</span>
                     </h1>
                     <div class="text-center">
                         <ul>
