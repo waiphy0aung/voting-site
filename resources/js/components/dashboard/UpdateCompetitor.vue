@@ -36,6 +36,11 @@
                             <input type="text" v-model="competitor.photo" class="form-control" id="name">
                             <small v-if="this.errors.photo" class="text-danger fw-bold">{{this.errors.photo[0]}}</small>
                         </div>
+                        <div class="mt-3">
+                            <label for="no" class="form-label">Competitor No</label>
+                            <input type="text" v-model="competitor.number_of_vote" class="form-control" id="no">
+                            <small v-if="this.errors.no" class="text-danger fw-bold">{{this.errors.no[0]}}</small>
+                        </div>
                         <button class="btn btn-primary mt-3 text-white " type="submit" :disabled="loading === true">Update Competitor</button>
                 </form>
             </div>
@@ -51,12 +56,13 @@ export default {
                 {name : 'Prince',slug : 'prince'},
                 {name : 'Princess',slug : 'princess'},
                 {name : 'Best Performance',slug : 'performance'},
-                {name : 'Best Singer',slug : 'singer'},
+                
             ],
             competitor : {
                 "name" : "",
                 "role" : "",
-                "photo" : ""
+                "photo" : "",
+                "no" : ""
             },
             errors : "",
             loading : false
@@ -71,6 +77,7 @@ export default {
         this.competitor.name = competitor.name;
         this.competitor.role = competitor.role;
         this.competitor.photo = competitor.profile;
+        this.competitor.no = competitor.number_of_vote;
     },
      
     mounted(){

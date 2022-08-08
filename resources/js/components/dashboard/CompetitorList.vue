@@ -23,7 +23,7 @@
                         <table class="table table-borderless table-hover">
                             <thead>
                                 <tr class="table-light">
-                                    <th>#</th>
+                                    <th>No.</th>
                                     <th>Name</th>
                                     <th class="text-nowrap">Vote Count</th>
                                     <th>Created</th>
@@ -35,7 +35,7 @@
                                     v-for="competitor in competitors"
                                     :key="competitor.id"
                                 >
-                                    <td style="min-width:50px">{{ competitor.id }}</td>
+                                    <td style="min-width:50px">{{ competitor.number_of_vote }}</td>
                                     <td class="text-nowrap">{{ competitor.name }}</td>
                                     <td>{{ competitor.vote_count }}</td>
                                     <td class="text-nowrap">

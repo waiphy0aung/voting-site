@@ -15,16 +15,25 @@
 }
 
 .vue-load-image{
-    height: 445px !important;
-    width: 334px  !important;
+    height: 100% !important;
+    width: 100%  !important;
+    align-items: center  !important;
+    display: flex  !important;
+    justify-content: center  !important;
+    
+}
+
+.img-loader{
+    width: 304px;
+    height: 405px;
     align-items: center  !important;
     display: flex  !important;
     justify-content: center  !important;
 }
 
-.img-loader{
-    width: 100px;
-    height: 100px;
+.img-loader img{
+    width: 70px;
+    height: 70px;
 }
 
 .welcome{

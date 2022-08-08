@@ -15,7 +15,11 @@
             <div class="card">
                 <div class="shadow-sm rounded card-body shadow">
                     <vue-load-image>
-                        <template v-slot:image>
+                        <template v-slot:image style="posititon:relative">
+                            <div class="vote-no position-absolute bg-primary me-2 text-white rounded-circle d-flex justify-content-center align-items-center"
+                             style="width : 50px;height:50px;top : 25px ; left : 25px">
+                                <h4 class="mb-0">{{ competitor.number_of_vote }}</h4>
+                            </div>
                             <img :src="
                             competitor.profile ?
                             `https://drive.google.com/uc?export=view&id=${competitor.profile}`
@@ -24,9 +28,13 @@
                             " alt="" class="img-fluid">
                         </template>
                         <template v-slot:preloader> 
-                            <img src="/images/im-loader.gif" class="img-loader"/>
+                            <div class="img-loader">
+                                <img src="/images/im-loader.gif"/>
+                            </div>
                         </template>
-                        <template v-slot:error>Image load fails</template>
+                        <template v-slot:error>
+                            <div class="img-loader">Image load fails</div>
+                        </template>
                     </vue-load-image>
                     
                     <hr>

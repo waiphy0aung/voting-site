@@ -26,6 +26,8 @@ class VoteController extends Controller
             'name' => 'required',
             'role' => 'required',
             'photo' => 'required',
+            'no' => 'required',
+
         ]);
         if($validator->fails()){
             return response()->json(['data'=>$validator->errors(),'success'=>false]);
@@ -34,7 +36,8 @@ class VoteController extends Controller
         $competitor = Competitor::create([
             'name' => $request->name,
             'role' => $request->role,
-            'profile' => $request->photo
+            'profile' => $request->photo,
+            'number_of_vote' => $request->no
         ]);
 
         return response()->json(['data' => 'created successfully','sucess' => true]);
@@ -45,7 +48,8 @@ class VoteController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'role' => 'required',
-            'photo' => 'required'
+            'photo' => 'required',
+            'no' => 'required'
         ]);
         if($validator->fails()){
             return response()->json(['data'=>$validator->errors(),'success'=>false]);
@@ -55,6 +59,7 @@ class VoteController extends Controller
             'name' => $request->name,
             'role' => $request->role,
             'profile' => $request->photo,
+            'number_of_vote' => $request->no
         ]);
 
         return response()->json(['data' => 'updated successfully','sucess' => true]);

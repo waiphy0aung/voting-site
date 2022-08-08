@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -27,7 +28,6 @@ class AuthController extends Controller
     }
 
     public function Login(Request $request){
-
         $user = User::where('voter_id',$request->voter_id)->where('password',$request->password)->first();
         if($user){
             $credentials = [
@@ -35,7 +35,7 @@ class AuthController extends Controller
                 'password' => $user->slug,
             ];
         }else{
-            return response()->json(['data' => 'unauthorized','status' => 500 , 'success' => false]);
+            return response()->json(['data' => 'unauthorized bitch!','status' => 500 , 'success' => false]);
 
         }
 
@@ -53,6 +53,15 @@ class AuthController extends Controller
             return response()->json(['data' => 'unauthorized','status' => 500 , 'success' => false]);
         }
 
+    }
+
+    public function register(Request $request){
+        $user = User::create([
+            'voter_id' => $request->voter_id,
+            'role' => 'user',
+            'password' => $request->password,
+            'number_of_vote' => $request->no
+        ]);
     }
 
 

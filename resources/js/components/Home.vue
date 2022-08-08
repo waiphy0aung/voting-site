@@ -5,11 +5,11 @@
             <div class="row vh-100">
                 <div class="col-12 mt-5 text-center">
                     <img src="/images/logo_ucsm.png" class="me-2" style="width: 100px;" alt="">
-                    <h1 class="mb-5 mt-3 display-3 text-primary">
+                    <h1 class="mb-5 mt-2 display-3 text-primary">
                         
-                        <span class="fw-bold mb-0 ">2022 UCSM</span>
+                        <span class="fw-bold mb-0 ">UCSM</span>
                         <br />
-                        <span class="welcome fw-bold">Flesher Welcome</span>
+                        <span class="welcome fw-bold" style="font-size: 0.8em">2022 Flesher Welcome</span>
                     </h1>
                     <div class="text-center">
                         <ul>

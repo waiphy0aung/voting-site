@@ -39,6 +39,11 @@
                             <input type="text" v-model="competitor.photo" class="form-control" id="name">
                             <small v-if="this.errors.photo" class="text-danger fw-bold">{{this.errors.photo[0]}}</small>
                         </div>
+                        <div class="mt-3">
+                            <label for="no" class="form-label">Competitor No</label>
+                            <input type="text" v-model="competitor.no" class="form-control" id="no">
+                            <small v-if="this.errors.no" class="text-danger fw-bold">{{this.errors.no[0]}}</small>
+                        </div>
                         <button class="btn btn-primary mt-3 text-white " type="submit" :disabled="loading === true">Add Competitor</button>
                 </form>
             </div>
@@ -53,7 +58,8 @@ export default {
             competitor : {
                 "name" : "",
                 "role" : "select a role",
-                "photo" : ""
+                "photo" : "",
+                "no" : ""
             },
             errors : "",
             loading : false
@@ -77,6 +83,7 @@ export default {
             formData.append('name',this.competitor.name)
             formData.append('role',this.competitor.role)
             formData.append('photo',this.competitor.photo)
+            formData.append('no',this.competitor.no)
             console.log(formData)
             const res = await axios.post('/api/competitor/create',formData,{
                 headers: {
@@ -84,7 +91,7 @@ export default {
                     },
             });
             const {data,success} = res.data
-            console.log(success)
+            console.log(data)
             if (success === false){
                 this.errors = data
                 this.loading = false;
@@ -94,7 +101,8 @@ export default {
                 this.product = {
                     "name" : "",
                     "role" : "select a role",
-                    "photo" : ""
+                    "photo" : "",
+                    "no" : "",
                 };
                 
                 // this.$store.commit('toast',data)
