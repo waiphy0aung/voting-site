@@ -14,6 +14,19 @@
     width: 300px;
 }
 
+.vue-load-image{
+    height: 445px !important;
+    width: 334px  !important;
+    align-items: center  !important;
+    display: flex  !important;
+    justify-content: center  !important;
+}
+
+.img-loader{
+    width: 100px;
+    height: 100px;
+}
+
 .welcome{
     font-family: 'Great Vibes', cursive;
     

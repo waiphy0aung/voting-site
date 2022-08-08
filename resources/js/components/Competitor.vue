@@ -14,12 +14,21 @@
         >
             <div class="card">
                 <div class="shadow-sm rounded card-body shadow">
-                    <img :src="
-                    competitor.profile ?
-                    `https://drive.google.com/uc?export=view&id=${competitor.profile}`
-                    :
-                    '/images/batman.jpeg'
-                    " alt="" class="img-fluid">
+                    <vue-load-image>
+                        <template v-slot:image>
+                            <img :src="
+                            competitor.profile ?
+                            `https://drive.google.com/uc?export=view&id=${competitor.profile}`
+                            :
+                            '/images/batman.jpeg'
+                            " alt="" class="img-fluid">
+                        </template>
+                        <template v-slot:preloader> 
+                            <img src="/images/im-loader.gif" class="img-loader"/>
+                        </template>
+                        <template v-slot:error>Image load fails</template>
+                    </vue-load-image>
+                    
                     <hr>
                     <div class="d-flex align-items-center justify-content-between">
                         <h3 class="mb-0">{{ competitor.name }}</h3>
@@ -64,9 +73,9 @@
 </template>
 <script>
 import Master from "./layouts/Master.vue";
-
+import VueLoadImage from 'vue-load-image'
 export default{ 
-  components: { Master },
+  components: { Master ,'vue-load-image': VueLoadImage },
   data(){
       return {
           loading : false
