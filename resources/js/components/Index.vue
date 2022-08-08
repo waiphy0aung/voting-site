@@ -1,5 +1,5 @@
 <template>
-    <div class="vh-100">
+    <div class=" vh-100 d-flex flex-column">
         <nav class="navbar navbar-expand-lg bg-primary position-sticky top-0" style="z-index : 1000;">
             <div class="container-fluid">
                 <a class="navbar-brand text-white d-flex align-items-center" href="#"> 
@@ -20,8 +20,8 @@
                 </div>
             </div>
         </div>
+        <Footer />
     </div>
-    <Footer />
 </template>
 <script>
 import Footer from './layouts/Footer.vue'

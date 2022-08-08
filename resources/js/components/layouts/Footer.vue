@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 position-absolute bottom-0">
+    <div class="col-12 mt-auto">
             <footer class="footer px-3">
                 <div class="d-flex justify-content-between">
                     <p class="">&copy; ucsm2022</p>
