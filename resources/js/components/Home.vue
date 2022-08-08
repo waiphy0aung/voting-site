@@ -3,18 +3,20 @@
         
         <div class="container">
             <div class="row vh-100">
-                <div class="col-12 mt-5">
-                    <h1 class="d-flex my-5 display-3 text-primary align-items-center justify-content-center">
-                        <img src="/images/logo_ucsm.png" class="me-2" style="width: 40px;" alt="">
-                        <span class="fw-bold mb-0 ">UCSM</span>
-                        <span class="welcome fw-bold" style="font-size: 0.8em">Flesher Welcome</span>
+                <div class="col-12 mt-5 text-center">
+                    <img src="/images/logo_ucsm.png" class="me-2" style="width: 100px;" alt="">
+                    <h1 class="mb-5 mt-3 display-3 text-primary">
+                        
+                        <span class="fw-bold mb-0 ">2022 UCSM</span>
+                        <br />
+                        <span class="welcome fw-bold">Flesher Welcome</span>
                     </h1>
                     <div class="text-center">
                         <ul>
                             <li v-for="r in role" :key="r.name"><button
                             @click="menuBtn(r.slug)"
                              class="my-3 w-75 text-white btn-lg btn btn-primary rounded-pill"
-                             >{{ r.name }}</button></li>
+                             >{{ r.name }}</button></li> 
                         </ul>
                         
                     </div>
