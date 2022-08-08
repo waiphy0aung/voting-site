@@ -14,7 +14,7 @@
         >
             <div class="card">
                 <div class="shadow-sm rounded card-body shadow">
-                    <vue-load-image>
+                    <vue-load-image v-if="competitor.role !== 'performance'">
                         <template v-slot:image style="posititon:relative">
                             <div class="vote-no position-absolute bg-primary me-2 text-white rounded-circle d-flex justify-content-center align-items-center"
                              style="width : 50px;height:50px;top : 25px ; left : 25px">
@@ -37,7 +37,7 @@
                         </template>
                     </vue-load-image>
                     
-                    <hr>
+                    <hr v-if="competitor.role !== 'performance'">
                     <div class="d-flex align-items-center justify-content-between">
                         <h3 class="mb-0">{{ competitor.name }}</h3>
                         <form action="" @click.prevent="vote()"></form>
