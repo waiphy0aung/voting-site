@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="vh-100">
         <nav class="navbar navbar-expand-lg bg-primary position-sticky top-0" style="z-index : 1000;">
             <div class="container-fluid">
                 <a class="navbar-brand text-white d-flex align-items-center" href="#"> 
@@ -21,12 +21,12 @@
             </div>
         </div>
     </div>
-    
+    <Footer />
 </template>
 <script>
-
+import Footer from './layouts/Footer.vue'
 export default{ 
-
+    components : {Footer},
   data(){
       return {
           url : []
