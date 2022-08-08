@@ -25,7 +25,6 @@ class VoteController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'role' => 'required',
-            'photo' => 'required',
             'no' => 'required',
 
         ]);
@@ -48,7 +47,6 @@ class VoteController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'role' => 'required',
-            'photo' => 'required',
             'no' => 'required'
         ]);
         if($validator->fails()){
