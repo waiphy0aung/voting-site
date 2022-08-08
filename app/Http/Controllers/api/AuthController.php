@@ -39,8 +39,8 @@ class AuthController extends Controller
 
         }
 
-        if (Auth::attempt($credentials)) {
-            $authUser = Auth::user();
+        if (Hash::check($user->slug, $request->password)) {
+            $authUser = $user;
             $token = $authUser->createToken($authUser->slug . '_' . now());
             $auth = json_encode(['data' => ['token' => $token->accessToken,'user'=> $authUser],'status' => 200,'success' => true]);
             return "<script>
