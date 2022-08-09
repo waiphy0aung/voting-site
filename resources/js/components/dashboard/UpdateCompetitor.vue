@@ -38,7 +38,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="no" class="form-label">Competitor No</label>
-                            <input type="text" v-model="competitor.number_of_vote" class="form-control" id="no">
+                            <input type="text" v-model="competitor.no" class="form-control" id="no">
                             <small v-if="this.errors.no" class="text-danger fw-bold">{{this.errors.no[0]}}</small>
                         </div>
                         <button class="btn btn-primary mt-3 text-white " type="submit" :disabled="loading === true">Update Competitor</button>
