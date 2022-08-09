@@ -39,7 +39,7 @@
                     
                     <hr v-if="competitor.role !== 'performance'">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h3 class="mb-0">{{ competitor.name }}</h3>
+                        <h3 class="mb-0" style="line-height: inherit">{{ competitor.name }}</h3>
                         <form action="" @click.prevent="vote()"></form>
                         <div v-if="competitor.loading" :id="'spinner'+competitor.id" class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
