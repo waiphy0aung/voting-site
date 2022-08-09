@@ -91,6 +91,7 @@ export default {
             formData.append('name',this.competitor.name)
             formData.append('role',this.competitor.role)
             formData.append('photo',this.competitor.photo)
+            formData.append('no',this.competitor.no)
             console.log(formData)
             const res = await axios.post(`/api/competitor/${id}/update`,formData,{
                 headers: {
