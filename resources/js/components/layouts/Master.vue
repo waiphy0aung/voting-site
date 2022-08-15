@@ -1,5 +1,5 @@
 <template>
-    <div class=" vh-100 d-flex flex-column">
+    <div class="d-flex flex-column">
         <Header />
         <Menu />
         <div class="container">

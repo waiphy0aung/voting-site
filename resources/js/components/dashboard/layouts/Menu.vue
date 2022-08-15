@@ -37,6 +37,8 @@ export default {
     data(){
         return {
             role : [
+                {name : 'King',slug : 'king'},
+                {name : 'Queen',slug : 'queen'},
                 {name : 'Prince',slug : 'prince'},
                 {name : 'Princess',slug : 'princess'},
                 {name : 'Best Performance',slug : 'performance'},

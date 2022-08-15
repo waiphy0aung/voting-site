@@ -15,7 +15,7 @@ class CompetitorFactory extends Factory
      */
     public function definition()
     {
-        $arr = ['performance','prince','princess'];
+        $arr = ['performance','prince','princess','king','queen'];
         $role = Arr::random($arr);
         return [
             'name' => $this->faker->name(),

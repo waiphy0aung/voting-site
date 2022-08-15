@@ -23,6 +23,8 @@
                             <label for="role" class="form-label">Role</label>
                             <select v-model="competitor.role" class="form-select" id="role">
                                 <option selected disabled>select a role</option>
+                                <option value="king">king</option>
+                                <option value="queen">queen</option>
                                 <option value="prince">prince</option>
                                 <option value="princess">princess</option>
                                 <option value="performance">performance</option>

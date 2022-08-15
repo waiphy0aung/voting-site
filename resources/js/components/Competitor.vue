@@ -61,7 +61,7 @@
                         "
                         >
                         
-                        <span>
+                        <span class="text-nowrap">
                             {{ 
                             
                             competitor.is_vote ?
