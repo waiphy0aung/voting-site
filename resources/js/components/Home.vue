@@ -16,7 +16,7 @@
                             <li v-for="r in role" :key="r.name"><button
                             @click="menuBtn(r.slug)"
                              class="my-3 w-75 text-white btn-lg btn btn-primary rounded-pill"
-                             >{{ r.name }}</button></li> 
+                             >{{ r.name }}  <i v-if="isVoted(r.slug)" class="text-success fa fa-check"></i></button></li> 
                         </ul>
                         
                     </div>
@@ -44,6 +44,19 @@ export default {
             if(competitor){
                 this.$Progress.start();
                 this.$router.push({name : 'competitor',params: {competitor : competitor}})
+            }
+        },
+        isVoted(role){
+                const competitors = this.$store.state.competitors.filter(
+                    c => c.role === role
+                );
+                const voted = competitors.find(
+                    c => c.is_vote === true
+                    ) 
+            if(voted){
+                return true;
+            }else{
+                return false;
             }
         },
     },

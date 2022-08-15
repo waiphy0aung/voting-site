@@ -45,6 +45,7 @@ class VoteController extends Controller
     public function update(Request $request,Competitor $competitor){
         
         $validator = Validator::make($request->all(),[
+            'id' => 'required',
             'name' => 'required',
             'role' => 'required',
             'no' => 'required'
@@ -54,6 +55,7 @@ class VoteController extends Controller
         }
 
         $competitor->update([
+            'id' => $request->id,
             'name' => $request->name,
             'role' => $request->role,
             'profile' => $request->photo,

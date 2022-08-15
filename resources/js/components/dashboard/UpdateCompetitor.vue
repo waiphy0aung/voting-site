@@ -19,6 +19,7 @@
             </div>
             <div class="card-body">
                 <form @submit.prevent="updateCompetitor(Number(this.$route.params.id))" enctype="multipart/form-data">
+                    <input type="hidden" v-model="this.$route.params.id">
                     <div class="mt-3">
                             <label for="role" class="form-label">Role</label>
                             <select v-model="competitor.role" class="form-select" id="role">
@@ -90,6 +91,7 @@ export default {
             const user = JSON.parse(localStorage.auth);
             this.loading = true;
             const formData = new FormData();
+            formData.append('id',id)
             formData.append('name',this.competitor.name)
             formData.append('role',this.competitor.role)
             formData.append('photo',this.competitor.photo)
