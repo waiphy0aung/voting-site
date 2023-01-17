@@ -10,9 +10,9 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <button v-if="this.$store.state.auth.data.user.role === 'admin'" data-bs-dismiss="modal" @click="dashboard"  class="my-2 w-75 text-white btn-lg btn btn-primary rounded-pill">Dashboard</button>
-                        
+
                         <ul>
-                            <li v-for="r in role" :key="r.name"><button
+                            <li v-for="r in roles" :key="r.id"><button
                             data-bs-dismiss="modal"
                              class="my-2 w-75 text-white btn-lg btn btn-primary rounded-pill" @click="menuBtn(r.slug)"
                              >{{ r.name }}  <i v-if="isVoted(r.slug)" class="text-success fa fa-check"></i></button></li>
@@ -36,19 +36,21 @@ export default {
                 {name : 'Best Performance',slug : 'performance'},
             ]
         }
-    },  
+    },
     computed : {
-        
+        roles(){
+            return this.$store.state.roles;
+        },
         user(){
             if(this.$store.state.auth){
-                return this.$store.state.auth.data.user; 
+                return this.$store.state.auth.data.user;
             }
         }
     },
     methods: {
         menuBtn(competitor){
             if(competitor){
-                
+
                 this.$router.push({name : 'competitor',params: {competitor : competitor}})
             }
         },
@@ -62,7 +64,7 @@ export default {
             );
             const voted = competitors.find(
                 c => c.is_vote === true
-                ) 
+                )
         if(voted){
             return true;
         }else{

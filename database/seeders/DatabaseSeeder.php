@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Competitor;
+use App\Models\Lock;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'remember_token' => Str::random(10),
         ]);
-        User::factory(200)->create();
-        Competitor::factory(20)->create();
+        Lock::factory(1)->create();
+        // User::factory(200)->create();
+        // Competitor::factory(20)->create();
     }
 }

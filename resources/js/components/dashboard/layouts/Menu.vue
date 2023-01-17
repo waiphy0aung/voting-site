@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <button data-bs-dismiss="modal" @click="this.$router.push({name : 'urls'})" class="my-2 w-75 text-white btn-lg btn btn-primary rounded-pill">
-                                    Urls for QR Code
+                                    User Management
                                 </button>
                             </li>
                             <li>
@@ -20,7 +20,12 @@
                                     Create Competitors
                                 </button>
                             </li>
-                            <li v-for="r in role" :key="r.name"><button
+                            <li>
+                                <button data-bs-dismiss="modal" @click="this.$router.push({name : 'roles'})" class="my-2 w-75 text-white btn-lg btn btn-primary rounded-pill">
+                                    Create Roles
+                                </button>
+                            </li>
+                            <li v-for="r in role" :key="r.id"><button
                             data-bs-dismiss="modal"
                              class="my-2 w-75 text-white btn-lg btn btn-primary rounded-pill" @click="menuBtn(r.slug)"
                              >{{ r.name }} List</button></li>
@@ -36,20 +41,23 @@
 export default {
     data(){
         return {
-            role : [
-                {name : 'King',slug : 'king'},
-                {name : 'Queen',slug : 'queen'},
-                {name : 'Prince',slug : 'prince'},
-                {name : 'Princess',slug : 'princess'},
-                {name : 'Best Performance',slug : 'performance'},
-            ]
+            // role : [
+            //     {name : 'King',slug : 'king'},
+            //     {name : 'Queen',slug : 'queen'},
+            //     {name : 'Prince',slug : 'prince'},
+            //     {name : 'Princess',slug : 'princess'},
+            //     {name : 'Best Performance',slug : 'performance'},
+            // ]
         }
-    },  
+    },
     computed : {
-        
+        role(){
+            return this.$store.state.roles;
+        }
     },
     methods: {
         menuBtn(competitor){
+            console.log(competitor);
             if(competitor){
                 this.$Progress.start();
                 this.$router.push({name : 'competitor-list',params: {competitor : competitor}})

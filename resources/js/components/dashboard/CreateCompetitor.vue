@@ -22,12 +22,9 @@
                     <div class="mt-3">
                             <label for="role" class="form-label">Role</label>
                             <select v-model="competitor.role" class="form-select" id="role">
-                                <option selected disabled>select a role</option>
-                                <option value="king">king</option>
-                                <option value="queen">queen</option>
-                                <option value="prince">prince</option>
-                                <option value="princess">princess</option>
-                                <option value="performance">performance</option>
+                                <option selected disabled value="">select a role</option>
+                                <option disabled v-if="roles.length == 0">There is no created role.</option>
+                                <option v-else v-for="role in roles" :key="role.id" :value="role.slug">{{ role.name }}</option>
                             </select>
                             <small v-if="this.errors.role" class="text-danger fw-bold">Please select a category</small>
                         </div>
@@ -38,7 +35,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="name" class="form-label">Competitor Photo</label>
-                            <input type="text" v-model="competitor.photo" class="form-control" id="name">
+                            <input type="file" v-on:change="(e) => onFileChange(e)" class="form-control" id="name">
                             <small v-if="this.errors.photo" class="text-danger fw-bold">{{this.errors.photo[0]}}</small>
                         </div>
                         <div class="mt-3">
@@ -59,8 +56,8 @@ export default {
         return {
             competitor : {
                 "name" : "",
-                "role" : "select a role",
-                "photo" : "",
+                "role" : "",
+                "photo" : null,
                 "no" : ""
             },
             errors : "",
@@ -75,16 +72,26 @@ export default {
         this.$Progress.finish();
     },
     computed : {
-        
+        roles(){
+            return this.$store.state.roles;
+        }
     },
     methods: {
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            console.log(files);
+            this.competitor.photo = files[0];
+        },
         async addCompetitor(){
+            if(this.competitor.role === "") return document.getElementById('role').focus();
             const user = JSON.parse(localStorage.auth);
             this.loading = true;
             const formData = new FormData();
             formData.append('name',this.competitor.name)
             formData.append('role',this.competitor.role)
-            formData.append('photo',this.competitor.photo)
+            formData.append('profile',this.competitor.photo)
             formData.append('no',this.competitor.no)
             console.log(formData)
             const res = await axios.post('/api/competitor/create',formData,{
@@ -97,16 +104,16 @@ export default {
             if (success === false){
                 this.errors = data
                 this.loading = false;
-                
+
             }else{
                 this.errors = {};
                 this.product = {
                     "name" : "",
-                    "role" : "select a role",
+                    "role" : "",
                     "photo" : "",
                     "no" : "",
                 };
-                
+
                 // this.$store.commit('toast',data)
                 this.loading = false;
                 this.$store.commit('toast',data);

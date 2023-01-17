@@ -23,7 +23,7 @@
                     <div class="mt-3">
                             <label for="role" class="form-label">Role</label>
                             <select v-model="competitor.role" class="form-select" id="role">
-                                <option v-for="r in role" :key="r.slug" :value="r.slug">{{ r.slug }}</option>
+                                <option v-for="r in roles" :key="r.id" :value="r.slug">{{ r.slug }}</option>
                             </select>
                             <small v-if="this.errors.role" class="text-danger fw-bold">Please select a category</small>
                         </div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="mt-3">
                             <label for="name" class="form-label">Competitor Photo</label>
-                            <input type="text" v-model="competitor.photo" class="form-control" id="name">
+                            <input type="file" v-on:change="(e) => onFileChange(e)" class="form-control" id="name">
                             <small v-if="this.errors.photo" class="text-danger fw-bold">{{this.errors.photo[0]}}</small>
                         </div>
                         <div class="mt-3">
@@ -59,12 +59,12 @@ export default {
                 {name : 'Prince',slug : 'prince'},
                 {name : 'Princess',slug : 'princess'},
                 {name : 'Best Performance',slug : 'performance'},
-                
+
             ],
             competitor : {
                 "name" : "",
                 "role" : "",
-                "photo" : "",
+                "photo" : null,
                 "no" : ""
             },
             errors : "",
@@ -79,22 +79,35 @@ export default {
         console.log(competitor)
         this.competitor.name = competitor.name;
         this.competitor.role = competitor.role;
-        this.competitor.photo = competitor.profile;
+        // this.competitor.photo = competitor.profile;
         this.competitor.no = competitor.number_of_vote;
     },
-     
+
     mounted(){
         this.$Progress.finish();
     },
+    computed : {
+        roles(){
+            return this.$store.state.roles;
+        }
+    },
     methods: {
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            console.log(files);
+            this.competitor.photo = files[0];
+        },
         async updateCompetitor(id){
+            if(this.competitor.role === "") return document.getElementById('role').focus();
             const user = JSON.parse(localStorage.auth);
             this.loading = true;
             const formData = new FormData();
             formData.append('id',id)
             formData.append('name',this.competitor.name)
             formData.append('role',this.competitor.role)
-            formData.append('photo',this.competitor.photo)
+            if(this.competitor.photo) formData.append('profile',this.competitor.photo)
             formData.append('no',this.competitor.no)
             console.log(formData)
             const res = await axios.post(`/api/competitor/${id}/update`,formData,{
@@ -110,7 +123,7 @@ export default {
             }else{
                 this.errors = {};
 
-                
+
                 // this.$store.commit('toast',data)
                 this.loading = false;
                 this.$store.commit('toast',data);
@@ -119,7 +132,7 @@ export default {
                 this.$router.push({name : 'competitor-list',params: {
                     competitor : this.competitor.role
                 }})
-                
+
             }
         }
     }

@@ -1,7 +1,7 @@
 @include('layouts.header')
     <script>
         if(localStorage.getItem("auth")){
-            
+
             const auth = JSON.parse(localStorage.getItem("auth"));
             localStorage.setItem("token",auth.data.token);
         }

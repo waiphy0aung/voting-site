@@ -8,13 +8,15 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ this.$route.params.competitor }}</li>
             </ol>
         </nav>
+        <div v-if="competitors.length == 0">There is no competitors.Please create</div>
         <div class="col-ms-12 col-md-6 col-lg-4 mb-3"
             v-for="competitor in competitors"
             :key="competitor.id"
+            v-else
         >
             <div class="card">
                 <div class="shadow-sm rounded card-body shadow">
-                    <vue-load-image v-if="competitor.role !== 'performance'">
+                    <vue-load-image v-if="competitor.profile">
                         <template v-slot:image style="posititon:relative">
                             <div class="vote-no position-absolute bg-primary me-2 text-white rounded-circle d-flex justify-content-center align-items-center"
                              style="width : 50px;height:50px;top : 25px ; left : 25px">
@@ -22,12 +24,12 @@
                             </div>
                             <img :src="
                             competitor.profile ?
-                            `https://drive.google.com/uc?export=view&id=${competitor.profile}`
+                            '/'+competitor.profile
                             :
                             '/images/batman.jpeg'
                             " alt="" class="img-fluid">
                         </template>
-                        <template v-slot:preloader> 
+                        <template v-slot:preloader>
                             <div class="img-loader">
                                 <img src="/images/im-loader.gif"/>
                             </div>
@@ -36,7 +38,7 @@
                             <div class="img-loader">Image load fails</div>
                         </template>
                     </vue-load-image>
-                    
+
                     <hr v-if="competitor.role !== 'performance'">
                     <div class="d-flex align-items-center justify-content-between">
                         <h3 class="mb-0" style="line-height: inherit">{{ competitor.name }}</h3>
@@ -44,7 +46,7 @@
                         <div v-if="competitor.loading" :id="'spinner'+competitor.id" class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <button v-else 
+                        <button v-else
                         :disabled="isVoted == true && competitor.is_vote == false"
                          class="text-white"
                         :class="
@@ -52,7 +54,7 @@
                         'text-decoration-line-through btn btn-primary'
                         :
                         competitor.is_vote ? 'btn-success btn' : 'btn btn-primary'
-                        " 
+                        "
                         @click="
                         isVoted == true && competitor.is_vote == false ?
                         ''
@@ -60,13 +62,13 @@
                         vote(competitor.role,this.$store.state.auth.data.user.id,competitor.id)
                         "
                         >
-                        
+
                         <span class="text-nowrap">
-                            {{ 
-                            
+                            {{
+
                             competitor.is_vote ?
                             'voted'
-                            
+
                             :
                             'vote'
                          }}
@@ -82,7 +84,7 @@
 <script>
 import Master from "./layouts/Master.vue";
 import VueLoadImage from 'vue-load-image'
-export default{ 
+export default{
   components: { Master ,'vue-load-image': VueLoadImage },
   data(){
       return {
@@ -93,7 +95,7 @@ export default{
       this.$Progress.start();
       const votedCompetitor = this.competitors.find(
             c => c.is_vote === true
-        ) 
+        )
       console.log(votedCompetitor)
   },
     mounted(){
@@ -103,7 +105,7 @@ export default{
       isVoted(){
         const voted = this.competitors.find(
             c => c.is_vote === true
-            ) 
+            )
         if(voted){
             return true;
         }else{
@@ -113,11 +115,10 @@ export default{
       competitors(){
           return this.$store.state.competitors.filter(
               (c) => c.role === this.$route.params.competitor
-              
           );
       },
-      
-      
+
+
   },
     methods: {
       async vote(role,id,competitor_id){
@@ -134,12 +135,12 @@ export default{
                     }},
           )
           this.$store.commit('toast',res.data.data)
-          
+
             this.$store.dispatch("getCompetitors");
             this.$store.dispatch("getVoteCompetitors");
             setTimeout(()=>{
                 competitor.loading = false;
-            },2000) 
+            },2000)
         }
     }
 }

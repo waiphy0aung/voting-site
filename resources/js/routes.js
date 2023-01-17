@@ -1,3 +1,4 @@
+
 const hasAuth = (to, from, next) => {
     const auth = localStorage.getItem("auth");
     if (auth) {
@@ -7,6 +8,19 @@ const hasAuth = (to, from, next) => {
     }
 };
 
+// const lock = (to,from,next) => {
+//     const auth = localStorage.getItem("auth");
+//     if(auth){
+//         if(JSON.parse(auth).data.user.role === 'admin'){
+//             return next();
+//         }else{
+//             return next('/');
+//         }
+//     }else{
+//         return next('/');
+//     }
+// }
+
 module.exports = [
     {
         path : '/',
@@ -14,20 +28,20 @@ module.exports = [
         component: () => import("./components/Index.vue"),
         meta : {
             isAuth : true
-        }
+        },
     },
     {
         path : '/home',
         name : 'home',
         component : () => import('./components/Home.vue'),
-        beforeEnter : hasAuth
+        beforeEnter : hasAuth,
 
     },
     {
         path : '/competitors/:competitor',
         name : 'competitor',
         component : () => import('./components/Competitor.vue'),
-        beforeEnter : hasAuth
+        beforeEnter : hasAuth,
 
     },
     {
@@ -37,7 +51,16 @@ module.exports = [
         meta : {
             isAdmin : true
         },
-        beforeEnter : hasAuth
+        beforeEnter : hasAuth,
+    },
+    {
+        path : '/dashboard/roles',
+        name : 'roles',
+        component : () => import('./components/dashboard/CreateRole.vue'),
+        meta : {
+            isAdmin : true
+        },
+        beforeEnter : hasAuth,
     },
     {
         path : '/dashboard/competitors/:id/update',
@@ -46,7 +69,7 @@ module.exports = [
         meta : {
             isAdmin : true
         },
-        beforeEnter : hasAuth
+        beforeEnter : hasAuth,
 
     },
     {
@@ -56,18 +79,17 @@ module.exports = [
         meta : {
             isAdmin : true
         },
-        beforeEnter : hasAuth
+        beforeEnter : hasAuth,
 
     },
     {
-        path : '/dashboard/urls',
+        path : '/dashboard/user-management',
         name : 'urls',
         component : () => import('./components/dashboard/Qrcode.vue'),
         meta : {
             isAdmin : true
         },
-        beforeEnter : hasAuth
-
+        beforeEnter : hasAuth,
     }
-    
+
 ]

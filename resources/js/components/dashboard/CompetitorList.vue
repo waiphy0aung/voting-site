@@ -34,6 +34,7 @@
                                 <tr
                                     v-for="competitor in competitors"
                                     :key="competitor.id"
+                                    v-if="competitors.length > 0"
                                 >
                                     <td style="min-width:50px">{{ competitor.number_of_vote }}</td>
                                     <td class="text-nowrap">{{ competitor.name }}</td>
@@ -71,6 +72,9 @@
                                             ></i>
                                         </button>
                                     </td>
+                                </tr>
+                                <tr v-else>
+                                    <td colspan="5" class="text-center">There is no {{ this.$route.params.competitor }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -134,7 +138,7 @@ export default {
                         }
             })
 
-            
+
         }
     }
 }

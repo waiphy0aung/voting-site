@@ -20,7 +20,7 @@
     align-items: center  !important;
     display: flex  !important;
     justify-content: center  !important;
-    
+
 }
 
 .img-loader{
@@ -38,7 +38,7 @@
 
 .welcome{
     font-family: 'Great Vibes', cursive;
-    
+
     margin-top : 5px;
 }
 
@@ -47,7 +47,7 @@
 }
 
 ul{
-    padding : 0 !important; 
+    padding : 0 !important;
 }
 
 ul li{
@@ -77,6 +77,11 @@ th {
 
 a{
     text-decoration: none !important;
+}
+
+.lock:checked {
+    background-color: red !important;
+    border-color: #69dae0;
 }
 
 

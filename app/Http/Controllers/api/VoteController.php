@@ -7,6 +7,7 @@ use App\Models\Competitor;
 use App\Models\VoteCompetitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class VoteController extends Controller
 {
@@ -21,7 +22,7 @@ class VoteController extends Controller
     }
 
     public function create(Request $request){
-        
+
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'role' => 'required',
@@ -31,19 +32,42 @@ class VoteController extends Controller
         if($validator->fails()){
             return response()->json(['data'=>$validator->errors(),'success'=>false]);
         }
+        if($request->hasFile('profile')){
+            $validate = Validator::make($request->all(),[
+               'profile'=>'mimetypes:image/jpeg,image/png|file'
+           ]);
+           if($validate->fails()){
+               return response()->json(['data'=> $validate->errors(),'status'=>500,'success'=>false]);
+           }
 
-        $competitor = Competitor::create([
-            'name' => $request->name,
-            'role' => $request->role,
-            'profile' => $request->photo,
-            'number_of_vote' => $request->no
-        ]);
+           $file = $request->file('profile');
+           $destination = 'images/competitors/';
+           $fileName =Str::slug($request->name,'_').uniqid(). $file->getClientOriginalName();
+           $request->file('profile')->move(public_path($destination),$fileName);
+
+            // unlink(public_path($destination . $fileName));
+
+        }
+
+        $competitor = new Competitor();
+        $competitor->name = $request->name;
+        $competitor->role = $request->role;
+        if($request->hasFile('profile')) $competitor->profile = $destination.$fileName;
+        $competitor->number_of_vote = $request->no;
+        $competitor->save();
+
+        // $competitor = Competitor::create([
+        //     'name' => $request->name,
+        //     'role' => $request->role,
+        //     'profile' => $request->photo,
+        //     'number_of_vote' => $request->no
+        // ]);
 
         return response()->json(['data' => 'created successfully','sucess' => true]);
     }
 
     public function update(Request $request,Competitor $competitor){
-        
+
         $validator = Validator::make($request->all(),[
             'id' => 'required',
             'name' => 'required',
@@ -54,18 +78,43 @@ class VoteController extends Controller
             return response()->json(['data'=>$validator->errors(),'success'=>false]);
         }
 
-        $competitor->update([
-            'id' => $request->id,
-            'name' => $request->name,
-            'role' => $request->role,
-            'profile' => $request->photo,
-            'number_of_vote' => $request->no
-        ]);
+        if($request->hasFile('profile')){
+            $validate = Validator::make($request->all(),[
+               'profile'=>'mimetypes:image/jpeg,image/png|file'
+           ]);
+           if($validate->fails()){
+               return response()->json(['data'=> $validate->errors(),'status'=>500,'success'=>false]);
+           }
+           unlink(public_path($competitor->profile));
+
+           $file = $request->file('profile');
+           $destination = 'images/competitors/';
+           $fileName =Str::slug($request->name,'_').uniqid(). $file->getClientOriginalName();
+           $request->file('profile')->move(public_path($destination),$fileName);
+
+            // unlink(public_path($destination . $fileName));
+
+        }
+
+        $competitor->name = $request->name;
+        $competitor->role = $request->role;
+        if($request->file('profile')) $competitor->profile = $destination.$fileName;
+        $competitor->number_of_vote = $request->no;
+        $competitor->save();
+
+        // $competitor->update([
+        //     'id' => $request->id,
+        //     'name' => $request->name,
+        //     'role' => $request->role,
+        //     'profile' => $request->photo,
+        //     'number_of_vote' => $request->no
+        // ]);
 
         return response()->json(['data' => 'updated successfully','sucess' => true]);
     }
 
     public function delete(Competitor $competitor){
+        if($competitor->profile) unlink(public_path($competitor->profile));
         $competitor->delete();
         return response()->json(['data' => 'deleted successfully','success' => true]);
     }
