@@ -35,7 +35,7 @@ class VoterController extends Controller
     }
 
     public function kings(){
-        return Competitor::where('role','king')->get();
+       return Competitor::where('role','king')->get();
     }
 
     public function queens(){

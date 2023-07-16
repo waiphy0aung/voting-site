@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 //Auth
 Route::controller(AuthController::class)->group(function(){
     Route::get('/users','getUsers')->middleware('auth:api');
-    Route::get('/login','Login');
+    Route::post('/login','Login');
+    Route::post('/signup','Signup');
     Route::post('logout', 'logout')->middleware('auth:sanctum');
  });
 

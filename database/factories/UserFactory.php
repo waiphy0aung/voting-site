@@ -18,6 +18,7 @@ class UserFactory extends Factory
         $password = Str::random(20);
         return [
             'voter_id' => $this->faker->numberBetween(1000,2000),
+            'email' => $this->faker->email(),
             'email_verified_at' => now(),
             'slug' => $password,
             'password' => Hash::make($password), // password
