@@ -29,6 +29,12 @@ class AuthController extends Controller
     }
 
     public function Login(Request $request){
+      try{
+        $validate = Validator::make($request->all(),[
+          'email' => 'required|email',
+          'password' => 'required'
+        ])
+        if($validate->fails()) return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
         $user = User::where('email',$request->email)->first();
         if(!$user){
             return response()->json(['data' => 'unauthorized bitch!','status' => 500 , 'success' => false]);
@@ -42,14 +48,18 @@ class AuthController extends Controller
         } else {
             return response()->json(['data' => 'unauthorized','status' => 500 , 'success' => false]);
         }
+      }catch(Exception $e){
+          return response()->json(['success' => false,'data' => $e->getMessage(),'status' => 500]);
+      }
+        
     }
 
      public function Signup(Request $request){
         try{
           $validate = Validator::make($request->all(),[
-              'name'=>'required',
+              'name'=>'required|min:3|max:99|unique:users,name',
               'email' => 'required|email|unique:users,email',
-              'password' => 'required',
+              'password' => 'required|min:4|max:99',
           ]);
           if($validate->fails()){
              return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
