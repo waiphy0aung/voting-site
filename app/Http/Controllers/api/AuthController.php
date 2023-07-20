@@ -29,6 +29,7 @@ class AuthController extends Controller
     }
 
     public function Login(Request $request){
+        return $request
         $user = User::where('email',$request->email)->first();
         if(!$user){
             return response()->json(['data' => 'unauthorized bitch!','status' => 500 , 'success' => false]);
