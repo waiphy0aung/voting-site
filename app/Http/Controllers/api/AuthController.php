@@ -61,7 +61,6 @@ class AuthController extends Controller
           $user->password = Hash::make($request->password);
           $user->role = 'user';
           $user->save();
-          return $user;
 
           $random = random_int(100000, 999999);
           /* return $random; */
