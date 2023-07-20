@@ -34,7 +34,9 @@ class AuthController extends Controller
           'email' => 'required|email',
           'password' => 'required'
         ])
-        if($validate->fails()) return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
+        if($validate->fails()){
+          return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
+        } 
         $user = User::where('email',$request->email)->first();
         if(!$user){
             return response()->json(['data' => 'unauthorized bitch!','status' => 500 , 'success' => false]);
