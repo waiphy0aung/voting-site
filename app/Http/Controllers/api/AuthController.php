@@ -63,7 +63,7 @@ class AuthController extends Controller
           $user->save();
 
           $random = random_int(100000, 999999);
-          /* return $random; */
+          return $random;
           $token = $user->createToken($user->email . '_' .now().'_'.$user->role);
           $user->update([
               'check_code' => $random
