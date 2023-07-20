@@ -57,6 +57,8 @@ class AuthController extends Controller
               'name'=>'required|min:3|max:99|unique:users,name',
               'email' => 'required|email|unique:users,email',
               'password' => 'required|min:4|max:99',
+              'password' => 'required|min:4|max:99',
+              'confirmPassword' => 'required|same:password',
           ]);
           if($validate->fails()){
              return response()->json(['data'=>$validate->errors(),'status' => "error"]);
