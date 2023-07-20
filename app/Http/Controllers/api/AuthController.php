@@ -33,7 +33,7 @@ class AuthController extends Controller
         $validate = Validator::make($request->all(),[
           'email' => 'required|email',
           'password' => 'required'
-        ])
+        ]);
         if($validate->fails()){
           return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
         } 
