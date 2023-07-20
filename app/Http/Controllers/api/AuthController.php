@@ -34,24 +34,19 @@ class AuthController extends Controller
           'email' => 'required|email',
           'password' => 'required'
         ]);
-        if($validate->fails()){
-          return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
-        } 
+        if($validate->fails()) return response()->json(['data'=>$validate->errors(),'status' => "error"]); 
         $user = User::where('email',$request->email)->first();
-        if(!$user){
-            return response()->json(['data' => 'unauthorized bitch!','status' => 500 , 'success' => false]);
-        }
+        if(!$user) return response()->json(['data' => 'Email or Password Invalid','status' => "fail"]);
 
         if (Hash::check($request->password, $user->password)) {
             $authUser = $user;
             $token = $authUser->createToken($authUser->email . '_' . now().'_'.$authUser->role);
-            return response()->json(['token' => $token->accessToken,'user'=> $authUser,'status' => 200,'success' => true]);
-
+            return response()->json(['data'=>['token' => $token->accessToken,'user'=> $authUser],'status' => 'success']);
         } else {
-            return response()->json(['data' => 'unauthorized','status' => 500 , 'success' => false]);
+            return response()->json(['data' => 'Email or Password Invalid','status' => "fail"]);
         }
       }catch(Exception $e){
-          return response()->json(['success' => false,'data' => $e->getMessage(),'status' => 500]);
+          return response()->json(['data' => $e->getMessage(),'status' => "fail"]);
       }
         
     }
@@ -64,7 +59,7 @@ class AuthController extends Controller
               'password' => 'required|min:4|max:99',
           ]);
           if($validate->fails()){
-             return response()->json(['data'=>$validate->errors(),'success' => false,'status' => 400]);
+             return response()->json(['data'=>$validate->errors(),'status' => "error"]);
           }
           
           $user = new User();
@@ -86,9 +81,9 @@ class AuthController extends Controller
                  'token' => $token
              ];
           
-          return response()->json(['token'=>$token->accessToken,'user'=>$user,'success' => true,'status' => 200]);  
+          return response()->json(['data'=>['token'=>$token->accessToken,'user'=>$user],'status' => "success"]);  
         } catch (Exception $e){
-          return response()->json(['success' => false,'data' => $e->getMessage(),'status' => 500]);
+          return response()->json(['data' => $e->getMessage(),'status' => "fail"]);
         }
         
 
