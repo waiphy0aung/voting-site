@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         DB::table('users')->insert([
-            'voter_id' => 'admin',
             'email_verified_at' => now(),
-            'slug' => 'admin123',
+            'email'=>'admin@gmail.com',
+            'name'=>'Admin',
             'password' => Hash::make('admin123'), // password
             'role' => 'admin',
             'remember_token' => Str::random(10),
         ]);
-        User::factory(200)->create();
-        Competitor::factory(20)->create();
+        /* User::factory(200)->create(); */
+        /* Competitor::factory(20)->create(); */
     }
 }
