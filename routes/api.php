@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/unauthorize', function () {
+    return response()->json(['data' => 'Unauthenticate', 'status' => 'error']);
+})->name('unauthorize');
+
 //Auth
 Route::controller(AuthController::class)->group(function () {
     Route::get('/users', 'getUsers')->middleware('auth:api');
@@ -34,8 +38,10 @@ Route::controller(CategoryController::class)->group(function () {
 });
 
 Route::controller(VoteController::class)->group(function () {
+
     Route::middleware('auth:api')->group(function () {
-        Route::post('/competitors', 'competitors');
+        Route::get('/competitors', 'competitors');
+        Route::get('/competitor/{competitor}', 'competitor');
         Route::get('/vote-competitors', 'voteCompetitors');
         Route::post('/competitor/create', 'create');
         Route::post('/competitor/{competitor}/update', 'update');

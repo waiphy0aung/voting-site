@@ -14,7 +14,12 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        return response()->json(['data' => Category::all(), 'success' => true]);
+        try {
+            $categories = Category::all();
+            return response()->json(['data' => $categories, 'status' => 'success']);
+        } catch (Exception $e) {
+            return response()->json(['data' => $e->getMessage(), 'status' => 'error']);
+        }
     }
 
     public function create(Request $request)
@@ -69,7 +74,7 @@ class CategoryController extends Controller
             $category->delete();
             return response()->json(['data' => $category, 'status' => 'success']);
         } catch (Exception $e) {
-            return response()->json(['data' => $e->getMessage(),'status' => 'error']);
+            return response()->json(['data' => $e->getMessage(), 'status' => 'error']);
         }
     }
 }

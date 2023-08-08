@@ -18,6 +18,12 @@ class CreateCompetitorsTable extends Migration
             $table->string('profile')->nullable();
             $table->string('name');
             $table->string('number_of_vote')->default(0);
+            $table->integer('height');
+            $table->integer('weight')->nullable();
+            $table->string('location');
+            $table->string('phone');
+            $table->integer('age');
+            $table->string('hobby');
             $table->timestamps();
         });
     }

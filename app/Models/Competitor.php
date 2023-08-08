@@ -13,7 +13,12 @@ class Competitor extends Model
         'profile',
         'name',
         'number_of_vote',
-        'role'
+        'height',
+        'weight',
+        'age',
+        'phone',
+        'location',
+        'hobby'
     ];
 
 }
