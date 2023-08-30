@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             'email'=>'admin@gmail.com',
             'name'=>'Admin',
             'password' => Hash::make('admin123'), // password
+            'profile' => null,
             'role' => 'admin',
             'remember_token' => Str::random(10),
         ]);
