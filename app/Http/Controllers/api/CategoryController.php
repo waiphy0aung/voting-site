@@ -72,7 +72,7 @@ class CategoryController extends Controller
         try {
             if (!$category) return response()->json(["data" => "Category not found", "status" => "error"]);
             $category->delete();
-            return response()->json(['data' => $category, 'status' => 'success']);
+            return response()->json(['data' => $category->id, 'status' => 'success']);
         } catch (Exception $e) {
             return response()->json(['data' => $e->getMessage(), 'status' => 'error']);
         }

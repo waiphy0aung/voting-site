@@ -37,16 +37,16 @@ class AuthController extends Controller
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
-            if ($validate->fails()) return response()->json(['data' => $validate->errors(), 'status' => "error"]);
+            if ($validate->fails()) return response()->json(['data' => $validate->errors(), 'status' => "fail"]);
             $user = User::where('email', $request->email)->first();
-            if (!$user) return response()->json(['data' => 'Email or Password Invalid', 'status' => "fail"]);
+            if (!$user) return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"]);
 
             if (Hash::check($request->password, $user->password)) {
                 $authUser = $user;
                 $token = $authUser->createToken($authUser->email . '_' . now() . '_' . $authUser->role);
-                return response()->json(['data' => ['token' => $token->accessToken, 'user' => $authUser], 'status' => 'success']);
+                return response()->json(['data' => ['token' => $token->accessToken, 'user' => $authUser, 'role' => $authUser->role], 'status' => 'success']);
             } else {
-                return response()->json(['data' => 'Email or Password Invalid', 'status' => "fail"]);
+                return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"]);
             }
         } catch (Exception $e) {
             return response()->json(['data' => $e->getMessage(), 'status' => "fail"]);
@@ -60,18 +60,17 @@ class AuthController extends Controller
                 'name' => 'required|min:3|max:99|unique:users,name',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:4|max:99',
-                'password' => 'required|min:4|max:99',
                 'confirmPassword' => 'required|same:password',
             ]);
             if ($validate->fails()) {
-                return response()->json(['data' => $validate->errors(), 'status' => "error"]);
+                return response()->json(['data' => $validate->errors(), 'status' => "fail"]);
             }
 
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->profile = $request->profile;
             $user->password = Hash::make($request->password);
-            $user->role = 'user';
             $user->save();
 
             $random = random_int(100000, 999999);
@@ -79,26 +78,9 @@ class AuthController extends Controller
             $user->update([
                 'check_code' => $random
             ]);
-            $data = [
-                'random' => $random,
-                'name' => $user->name,
-                'email' => $user->email,
-                'token' => $token
-            ];
-
             return response()->json(['data' => ['token' => $token->accessToken, 'user' => $user], 'status' => "success"]);
         } catch (Exception $e) {
-            return response()->json(['data' => $e->getMessage(), 'status' => "fail"]);
+            return response()->json(['data' => $e->getMessage(), 'status' => "error"]);
         }
-    }
-
-    public function register(Request $request)
-    {
-        $user = User::create([
-            'voter_id' => $request->voter_id,
-            'role' => 'user',
-            'password' => $request->password,
-            'number_of_vote' => $request->no
-        ]);
     }
 }

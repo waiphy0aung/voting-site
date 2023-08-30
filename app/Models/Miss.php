@@ -5,20 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Competitor extends Model
+class Miss extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'profile',
+        'image',
         'name',
-        'number_of_vote',
+        'slug',
         'height',
         'weight',
+        'bust',
+        'waist',
+        'hips',
         'age',
-        'phone',
         'location',
         'hobby'
     ];
-
 }

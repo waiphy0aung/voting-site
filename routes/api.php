@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\api\VoteController;
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\MissController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,29 +23,24 @@ Route::get('/unauthorize', function () {
 //Auth
 Route::controller(AuthController::class)->group(function () {
     Route::get('/users', 'getUsers')->middleware('auth:api');
-    Route::post('/login', 'Login');
-    Route::post('/signup', 'Signup');
-    Route::post('logout', 'logout')->middleware('auth:sanctum');
+    Route::post('/auth/login', 'Login');
+    Route::post('/auth/register', 'Signup');
 });
 
 Route::controller(CategoryController::class)->group(function () {
-    Route::get('/categories', 'categories');
     Route::middleware('auth:api')->group(function () {
+        Route::get('/categories', 'categories');
         Route::post('/categories/create', 'create');
-        Route::post('/categories/{category}/update', 'update');
-        Route::delete('/categories/{category}/delete', 'delete');
+        Route::put('/categories/update/{category}', 'update');
+        Route::delete('/categories/delete/{category}', 'delete');
     });
 });
 
-Route::controller(VoteController::class)->group(function () {
-
-    Route::middleware('auth:api')->group(function () {
-        Route::get('/competitors', 'competitors');
-        Route::get('/competitor/{competitor}', 'competitor');
-        Route::get('/vote-competitors', 'voteCompetitors');
-        Route::post('/competitor/create', 'create');
-        Route::post('/competitor/{competitor}/update', 'update');
-        Route::delete('/competitor/{competitor}/delete', 'delete');
-        Route::post('/competitor/vote', 'voteCompetitor');
-    });
+Route::controller(MissController::class)->group(function () {
+    Route::get('/misses','misses');
+    Route::get('/misses/{miss}','misses');
+    Route::post('/misses/create','create');
+    Route::put('/misses/update/{miss}','update');
+    Route::delete('/misses/delete/{miss}','delete');
 });
+

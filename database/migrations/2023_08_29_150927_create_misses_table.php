@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompetitorsTable extends Migration
+class CreateMissesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateCompetitorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('competitors', function (Blueprint $table) {
+        Schema::create('misses', function (Blueprint $table) {
             $table->id();
-            $table->string('profile')->nullable();
             $table->string('name');
-            $table->string('number_of_vote')->default(0);
-            $table->integer('height');
-            $table->integer('weight')->nullable();
-            $table->string('location');
-            $table->string('phone');
+            $table->string('image');
             $table->integer('age');
+            $table->integer('height');
+            $table->integer('weight');
+            $table->integer('bust');
+            $table->integer('waist');
+            $table->integer('hips');
+            $table->string('location');
             $table->string('hobby');
             $table->timestamps();
         });
@@ -35,6 +36,6 @@ class CreateCompetitorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competitors');
+        Schema::dropIfExists('misses');
     }
 }
