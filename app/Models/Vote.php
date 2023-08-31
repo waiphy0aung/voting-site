@@ -10,4 +10,12 @@ class Vote extends Model
     use HasFactory;
 
     protected $fillable = ['missId','userId','categoryId'];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function miss(){
+        return $this->belongsTo(Miss::class);
+    }
 }

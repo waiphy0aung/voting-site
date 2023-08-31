@@ -22,4 +22,9 @@ class Miss extends Model
         'location',
         'hobby'
     ];
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class,"missId","id");
+    }
 }

@@ -42,19 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function princes(){
-        return $this->hasMany(VotePrince::class);
-    }
-
-    public function princesses(){
-        return $this->hasMany(VotePrincess::class);
-    }
-
-    public function performances(){
-        return $this->hasMany(VotePerformance::class);
-    }
-
-    public function singers(){
-        return $this->hasMany(VoteSinger::class);
+    public function votes () {
+        return $this->hasMany(Vote::class,'userId','id');
     }
 }

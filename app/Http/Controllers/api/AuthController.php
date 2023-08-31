@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Session;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Vote;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,18 +17,29 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
 
-    public function getUsers()
+    public function getUsers(User $user)
     {
-        $user = User::all();
-        $arr = [];
-        foreach ($user as $key => $u) {
-            $id = $user[$key]->id;
-            $voter_id = $user[$key]->voter_id;
-            $password = $user[$key]->password;
-            $url = ['id' => $id, 'voter_id' => $voter_id, 'password' => $password];
-            array_push($arr, $url);
+        try {
+            if ($user->id) {
+                return response()->json(['data' => $user, 'status' => 'success'], 200);
+            }
+            $user = User::with("votes")->get();
+            return response()->json(['data' => $user, 'status' => 'success'], 200);
+        } catch (Exception $e) {
+            return response()->json(['data' => $e->getMessage(), 'status' => "fail"], 500);
         }
-        return $arr;
+    }
+
+    public function deleteUser(User $user)
+    {
+        try {
+            if(!$user) return response()->json(['data' => 'User not found','status' => 'success'],404);
+            $user->delete();
+            Vote::where('userId',$user->id)->delete();
+            return response()->json(['data' => $user->id, 'status' => 'success'], 200);
+        } catch (Exception $e) {
+            return response()->json(['data' => $e->getMessage(), 'status' => "fail"], 500);
+        }
     }
 
     public function Login(Request $request)
@@ -37,19 +49,19 @@ class AuthController extends Controller
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
-            if ($validate->fails()) return response()->json(['data' => $validate->errors(), 'status' => "fail"]);
+            if ($validate->fails()) return response()->json(['data' => $validate->errors(), 'status' => "fail"], 500);
             $user = User::where('email', $request->email)->first();
-            if (!$user) return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"]);
+            if (!$user) return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"], 500);
 
             if (Hash::check($request->password, $user->password)) {
                 $authUser = $user;
                 $token = $authUser->createToken($authUser->email . '_' . now() . '_' . $authUser->role);
-                return response()->json(['data' => ['token' => $token->accessToken, 'user' => $authUser, 'role' => $authUser->role], 'status' => 'success']);
+                return response()->json(['data' => ['token' => $token->accessToken, 'user' => $authUser, 'role' => $authUser->role], 'status' => 'success'], 200);
             } else {
-                return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"]);
+                return response()->json(['data' => 'Email or Password Invalid', 'status' => "error"], 500);
             }
         } catch (Exception $e) {
-            return response()->json(['data' => $e->getMessage(), 'status' => "fail"]);
+            return response()->json(['data' => $e->getMessage(), 'status' => "fail"], 500);
         }
     }
 
@@ -63,7 +75,7 @@ class AuthController extends Controller
                 'confirmPassword' => 'required|same:password',
             ]);
             if ($validate->fails()) {
-                return response()->json(['data' => $validate->errors(), 'status' => "fail"]);
+                return response()->json(['data' => $validate->errors(), 'status' => "fail"], 500);
             }
 
             $user = new User();
@@ -78,9 +90,20 @@ class AuthController extends Controller
             $user->update([
                 'check_code' => $random
             ]);
-            return response()->json(['data' => ['token' => $token->accessToken, 'user' => $user], 'status' => "success"]);
+            return response()->json(['data' => ['token' => $token->accessToken, 'user' => $user], 'status' => "success"], 200);
         } catch (Exception $e) {
-            return response()->json(['data' => $e->getMessage(), 'status' => "error"]);
+            return response()->json(['data' => $e->getMessage(), 'status' => "error"], 500);
+        }
+    }
+
+    public function LoginWithToken(Request $request)
+    {
+        try {
+            $authUser = User::find(Auth::id());
+            $token = $authUser->createToken($authUser->email . '_' . now() . '_' . $authUser->role);
+            return response()->json(['data' => ['token' => $token->accessToken, 'user' => $authUser, 'role' => $authUser->role], 'status' => 'success'], 200);
+        } catch (Exception $e) {
+            return response()->json(['data' => $e->getMessage(), 'status' => "error"], 500);
         }
     }
 }
