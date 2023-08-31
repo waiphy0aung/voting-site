@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -71,7 +72,12 @@ class AuthController extends Controller
             $validate = Validator::make($request->all(), [
                 'name' => 'required|min:3|max:99|unique:users,name',
                 'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:4|max:99',
+                /* 'password' => 'required|min:8|letters|mixedCase|numbers|symbols|uncompromised', */
+                'password' => ['required', Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()],
                 'confirmPassword' => 'required|same:password',
             ]);
             if ($validate->fails()) {
