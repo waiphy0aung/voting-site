@@ -36,7 +36,8 @@ class AuthController extends Controller
         try {
             if(!$user) return response()->json(['data' => 'User not found','status' => 'success'],404);
             $user->delete();
-            Vote::where('userId',$user->id)->delete();
+            $ids = Vote::where('id', $user->id)->get(['id']);
+            Vote::destroy($ids->toArray());
             return response()->json(['data' => $user->id, 'status' => 'success'], 200);
         } catch (Exception $e) {
             return response()->json(['data' => $e->getMessage(), 'status' => "fail"], 500);

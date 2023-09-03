@@ -193,7 +193,9 @@ class MissController extends Controller
             $imagePath = preg_replace('/%20/', ' ', $imagePath);
             app("firebase.storage")->getBucket()->object($imagePath)->delete();
 
-            Vote::where("missId", $miss->id)->delete();
+            $ids = Vote::where('id', $miss->id)->get(['id']);
+            Vote::destroy($ids->toArray());
+            /* Vote::where("missId", $miss->id)->delete(); */
             $miss->delete();
             return response()->json(['data' => $miss->id, 'status' => 'success'], 200);
         } catch (Exception $e) {

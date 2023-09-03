@@ -73,7 +73,9 @@ class CategoryController extends Controller
         try {
             if (!$category) return response()->json(["data" => "Category not found", "status" => "error"], 404);
             $category->delete();
-            Vote::where('categoryId', $category->id)->delete();
+            $ids = Vote::where('categoryId', $category->id)->get(['id']);
+            Vote::destroy($ids->toArray());
+            /* Vote::where('categoryId', $category->id)->delete(); */
             return response()->json(['data' => $category->id, 'status' => 'success'], 200);
         } catch (Exception $e) {
             return response()->json(['data' => $e->getMessage(), 'status' => 'error'], 500);
