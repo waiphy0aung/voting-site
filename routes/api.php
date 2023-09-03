@@ -57,7 +57,7 @@ Route::controller(VoteController::class)->group(function () {
     Route::post('/vote', 'Vote')->middleware('auth:api');
 });
 
-Route::controller(LockController::class)->middleware('auth:api')->group(function(){
+Route::controller(LockController::class)->group(function(){
     Route::get('/lock','getLock');
     Route::post('/lock','lock');
     Route::post('/lock/voting-time','votingTime');
