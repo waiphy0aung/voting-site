@@ -210,7 +210,7 @@ class MissController extends Controller
             $isVote = new stdClass();
             foreach ($votes as $key => $vote) {
                 $category = Category::find($vote->categoryId)->slug;
-                $count = Vote::where('categoryId', $vote->categoryId)->count();
+                $count = $votes->where('categoryId', $vote->categoryId)->count();
                 $find = collect($votes)->where('userId', Auth::id())->where('categoryId', $vote->categoryId);
                 $voteCount->$category = $count;
                 if (count($find) > 0) {
