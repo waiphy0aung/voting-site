@@ -104,8 +104,9 @@ class MissController extends Controller
             ]);
 
             $miss->hobby = json_decode($miss->hobby);
-            /* $miss->voteCount = $this->voteDetails($miss->id, Auth::id())[0]; */
-            /* $miss->isVote = $this->voteDetails($miss->id, Auth::id())[1]; */
+            $miss['voteCount'] = $this->voteDetails($miss->votes)[0];
+            $miss['isVote'] = $this->voteDetails($miss->votes)[1];
+            unset($miss->votes);
 
             return response()->json(['data' => $miss, 'status' => 'success'], 201);
         } catch (Exception $e) {
@@ -121,7 +122,7 @@ class MissController extends Controller
             $data = json_decode($request->data);
 
             $validator = Validator::make(json_decode($request->data, true), [
-                'name' => 'required|unique:misses,name|min:2|max:50',
+                'name' => 'required|min:2|max:50',
                 'height' => 'numeric|required|min:150|min:150|max:200',
                 'weight' => 'numeric|required|min:40|max:100',
                 'bust' => 'numeric|required|min:10|max:100',
@@ -171,8 +172,11 @@ class MissController extends Controller
                 'location' => $data->location,
                 'hobby' => json_encode($data->hobby)
             ]);
-            /* $miss->voteCount = $this->voteDetails($miss->id, Auth::id())[0]; */
-            /* $miss->isVote = $this->voteDetails($miss->id, Auth::id())[1]; */
+
+            $miss['hobby'] = json_decode($miss->hobby);
+            $miss['voteCount'] = $this->voteDetails($miss->votes)[0];
+            $miss['isVote'] = $this->voteDetails($miss->votes)[1];
+            unset($miss->votes);
 
             return response()->json(['data' => $miss, 'status' => 'success'], 200);
         } catch (Exception $e) {
